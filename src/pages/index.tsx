@@ -4,7 +4,7 @@ import { Recipe } from "../types";
 
 interface Props {}
 
-const TopPage: React.FC<Props> = () => {
+const SearchPage: React.FC<Props> = () => {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
   useEffect(() => {
     const getRecipes = async () => {
@@ -21,4 +21,4 @@ const TopPage: React.FC<Props> = () => {
   return <div>{recipes && <div>{JSON.stringify(recipes)}</div>}</div>;
 };
 
-export default TopPage;
+export default SearchPage;
