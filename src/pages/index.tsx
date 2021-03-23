@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import * as api from "../api/recipes";
-import { Recipe } from "../types";
+import type { Recipe } from "../types";
+import {NextPage} from "next"
 
-interface Props {}
-
-const SearchPage: React.FC<Props> = () => {
+const SearchPage: NextPage = () => {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
   useEffect(() => {
     const getRecipes = async () => {
