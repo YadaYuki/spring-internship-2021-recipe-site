@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import * as api from "../api/recipes";
-import { Recipe } from "../types";
+import type { Recipe } from "../types";
+import {NextPage} from "next"
 
-interface Props {}
-
-const TopPage: React.FC<Props> = () => {
+const SearchPage: NextPage = () => {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
   useEffect(() => {
     const getRecipes = async () => {
@@ -18,7 +17,13 @@ const TopPage: React.FC<Props> = () => {
       })
       .catch((err: any) => {});
   });
-  return <div>{recipes && <div>{JSON.stringify(recipes)}</div>}</div>;
+  return <div>{recipes && <div>{recipes.map((recipe) => {
+    return (
+      <div>
+      <a href={`recipes/${recipe.id}`}>{recipe.title}</a>
+      </div>
+    )
+  })}</div>}</div>;
 };
 
-export default TopPage;
+export default SearchPage;
