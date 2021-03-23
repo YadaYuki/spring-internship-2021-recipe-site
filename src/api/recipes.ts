@@ -2,8 +2,6 @@ import axiosBase from "axios";
 import {  QueryParamRecipes, ResponseRecipes } from "../types";
 import {API_KEY,API_URL} from "./env"
 
-
-
 // set request header
 const axios = axiosBase.create({
   baseURL: API_URL,

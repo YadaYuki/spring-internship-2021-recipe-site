@@ -1,17 +1,22 @@
+
+export type Author = {
+  user_name: string;
+};
+
+export type Ingredient = {
+  name: string;
+  quantity: string;
+}
+
 export type Recipe = {
   id: number;
   title: string;
   description: string;
   image_url: string | null;
-  author: {
-    user_name: string;
-  };
+  author: Author
   published_at: string;
   steps: string[];
-  ingredients: {
-    name: string;
-    quantity: string;
-  }[];
+  ingredients:Ingredient[];
   related_recipes: number[];
 };
 

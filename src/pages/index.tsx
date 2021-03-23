@@ -1,17 +1,24 @@
-import React,{useEffect} from 'react'
-import {getRecipes} from "../api/recipes"
+import React, { useEffect, useState } from "react";
+import * as api from "../api/recipes";
+import { Recipe } from "../types";
 
 interface Props {}
 
-const TopPage:React.FC<Props> = () => {
-  useEffect(()=>{
-    const fetchData = async()=>{
-      const data = await getRecipes()
-      console.log(data)
-    }
-    fetchData()
-  })
-return (<div>Hogehoge</div>)
-}
+const TopPage: React.FC<Props> = () => {
+  const [recipes, setRecipes] = useState<Recipe[] | null>(null);
+  useEffect(() => {
+    const getRecipes = async () => {
+      const data = await api.getRecipes();
+      return data;
+    };
+    getRecipes()
+      .then((data) => {
+        const {recipes} = data
+        setRecipes(recipes)
+      })
+      .catch((err: any) => {});
+  });
+  return <div>{recipes && <div>{JSON.stringify(recipes)}</div>}</div>;
+};
 
-export default TopPage
+export default TopPage;
