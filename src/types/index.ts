@@ -1,4 +1,4 @@
-type Recipe = {
+export type Recipe = {
   id: number;
   title: string;
   description: string;
@@ -14,3 +14,17 @@ type Recipe = {
   }[];
   related_recipes: number[];
 };
+
+export type ResponseRecipes = {
+  recipes: Recipe[];
+  links: {
+    next?: string;
+    prev?: string;
+  };
+}
+export type QueryParamRecipes = {
+  page?: number;
+  id?: string;
+};
+
+
