@@ -1,5 +1,5 @@
 import axiosBase from "axios";
-import {  QueryParamRecipes, ResponseRecipes } from "../types";
+import {  Recipe,QueryParamRecipes, ResponseRecipes } from "../types";
 import {API_KEY,API_URL} from "./env"
 
 // set request header
@@ -14,3 +14,10 @@ export const getRecipes = async (page?: number, id?: string) => {
   const data = res.data as ResponseRecipes;
   return data;
 };
+
+export const getRecipe = async(id:number) => {
+  const res = await axios.get(`/recipes/${id}`)
+  const data = res.data as Recipe
+  return data
+}
+
