@@ -34,3 +34,10 @@ $ npx next dev
 http://localhost:3000/ を開いて `Hello Next!` が表示されていることを確認します。
 
 簡単でしたね。
+
+# URL 
+
+本アプリケーションは,masterブランチにマージされた際、Vercelを利用してホスティングされた環境にデプロイされる。
+URL:
+https://spring-internship-2021-recipe-site-umber.vercel.app/
+
