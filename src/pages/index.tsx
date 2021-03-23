@@ -17,7 +17,13 @@ const SearchPage: NextPage = () => {
       })
       .catch((err: any) => {});
   });
-  return <div>{recipes && <div>{JSON.stringify(recipes)}</div>}</div>;
+  return <div>{recipes && <div>{recipes.map((recipe) => {
+    return (
+      <div>
+      <a href={`recipes/${recipe.id}`}>{recipe.title}</a>
+      </div>
+    )
+  })}</div>}</div>;
 };
 
 export default SearchPage;

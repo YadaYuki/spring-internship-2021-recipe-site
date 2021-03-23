@@ -19,7 +19,6 @@ const RecipePage: NextPage = () => {
       // TODO:add message
       return;
     }
-
     getRecipe()
       .then((recipe) => {
         setRecipe(recipe);
