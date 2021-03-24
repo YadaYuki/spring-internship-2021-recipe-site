@@ -23,7 +23,7 @@ const SearchDrawer: React.FC<Props> = ({ handleClose, visible }) => {
       css={DrawerStyle}
     >
       <Search placeholder="料理名・食材名" style={{ width: 200 }} onSearch={(q:string)=>{
-        location.href=`?q=${q}`
+        location.href=`/?q=${q}`
       }}/>   
       <div>
         <p>ここに春が旬の食材一覧が入る予定</p>

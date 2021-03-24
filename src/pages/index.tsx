@@ -40,8 +40,17 @@ const SearchPage: NextPage<Props> = ({ query }) => {
       })
       .catch((err: any) => {});
   }, [q]);
-  const nextPageNum = useMemo(() => {
-    return page === undefined ? 2 : Number(page) + 1;
+  const nextPage = useMemo(() => {
+    let nextPageStr = "/?"
+    nextPageStr +=  `page=${page === undefined ? 2 : Number(page) + 1}`;
+    nextPageStr += q === undefined ? "" : `&q=${q}`
+    return nextPageStr
+  }, []);
+
+  const prevPage = useMemo(() => {
+    let prevPageStr = `/?page=${page - 1}`
+    prevPageStr += q === undefined ? "" : `&q=${q}`
+    return prevPageStr
   }, []);
   const renderPage = useMemo(() => {
     return page === undefined ? 1 : page;
@@ -59,7 +68,7 @@ const SearchPage: NextPage<Props> = ({ query }) => {
             <div>
               {hasPrev && (
                 <h2>
-                  <a href={`/?page=${page - 1}`}>前へ</a>
+                  <a href={prevPage}>前へ</a>
                 </h2>
               )}
             </div>
@@ -67,7 +76,7 @@ const SearchPage: NextPage<Props> = ({ query }) => {
             <div>
               {hasNext && (
                 <h2>
-                  <a href={`/?page=${nextPageNum}`}>次へ</a>
+                  <a href={nextPage}>次へ</a>
                 </h2>
               )}
             </div>
