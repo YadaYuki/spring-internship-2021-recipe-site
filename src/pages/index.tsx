@@ -5,13 +5,19 @@ import { NextPage } from "next";
 import Link from "next/link";
 import Header from "../components/header";
 
-const SearchPage: NextPage = () => {
+interface Props{
+  query:any
+}
+
+const SearchPage: NextPage<Props> = ({query}) => {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
+  const {q} = query
   useEffect(() => {
     const getRecipes = async () => {
       const data = await api.getRecipes();
       return data;
     };
+    console.log(q)
     getRecipes()
       .then((data) => {
         const { recipes } = data;
@@ -27,8 +33,8 @@ const SearchPage: NextPage = () => {
           {recipes.map((recipe) => {
             return (
               <div>
-                <Link href={`recipes/${recipe.id}`} >
-                  <a >{recipe.title}</a>
+                <Link href={`recipes/${recipe.id}`}>
+                  <a>{recipe.title}</a>
                 </Link>
               </div>
             );
@@ -37,6 +43,10 @@ const SearchPage: NextPage = () => {
       )}
     </div>
   );
+};
+
+SearchPage.getInitialProps = ({ query }) => {
+  return { query };
 };
 
 export default SearchPage;
