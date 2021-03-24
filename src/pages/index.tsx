@@ -1,3 +1,5 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import React, { useEffect, useState, useMemo } from "react";
 import * as api from "../api/recipes";
 import { Recipe } from "../types";
@@ -41,6 +43,9 @@ const SearchPage: NextPage<Props> = ({ query }) => {
   const nextPageNum = useMemo(() => {
     return page === undefined ? 2 : Number(page) + 1;
   }, []);
+  const renderPage = useMemo(()=>{
+    return page === undefined ? 1 : page;
+  },[])
   return (
     <Layout>
       {recipes && (
@@ -54,8 +59,23 @@ const SearchPage: NextPage<Props> = ({ query }) => {
               </div>
             );
           })}
-          {hasPrev && <a href={`/?page=${page - 1}`}>前へ</a>}
-          {hasNext && <a href={`/?page=${nextPageNum}`}>次へ</a>}
+          <div css={PaginationWrapperStyle}>
+            <div>
+              {hasPrev && (
+                <h2>
+                  <a href={`/?page=${page - 1}`}>前へ</a>
+                </h2>
+              )}
+            </div>
+            <h2>{renderPage}ページ目</h2>
+            <div>
+              {hasNext && (
+                <h2>
+                  <a href={`/?page=${nextPageNum}`}>次へ</a>
+                </h2>
+              )}
+            </div>
+          </div>
         </div>
       )}
     </Layout>
@@ -65,5 +85,15 @@ const SearchPage: NextPage<Props> = ({ query }) => {
 SearchPage.getInitialProps = ({ query }) => {
   return { query };
 };
+
+const PaginationWrapperStyle = css`
+  display: flex;
+  justify-content: space-around;
+  border:1px solid #F2F2F2;
+  align-items: center;
+  h2 {
+    margin-top:0.5em;
+  }
+`;
 
 export default SearchPage;
