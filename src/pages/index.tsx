@@ -4,7 +4,6 @@ import React, { useEffect, useState, useMemo } from "react";
 import * as api from "../api/recipes";
 import { Recipe } from "../types";
 import { NextPage } from "next";
-import Link from "next/link";
 import Layout from "../components/layout";
 import { SearchPageQuery } from "../types/query-type";
 import RecipeCard from "../components/search/recipe-card";
@@ -41,8 +40,17 @@ const SearchPage: NextPage<Props> = ({ query }) => {
       })
       .catch((err: any) => {});
   }, [q]);
-  const nextPageNum = useMemo(() => {
-    return page === undefined ? 2 : Number(page) + 1;
+  const nextPage = useMemo(() => {
+    let nextPageStr = "/?"
+    nextPageStr +=  `page=${page === undefined ? 2 : Number(page) + 1}`;
+    nextPageStr += q === undefined ? "" : `&q=${q}`
+    return nextPageStr
+  }, []);
+
+  const prevPage = useMemo(() => {
+    let prevPageStr = `/?page=${page - 1}`
+    prevPageStr += q === undefined ? "" : `&q=${q}`
+    return prevPageStr
   }, []);
   const renderPage = useMemo(() => {
     return page === undefined ? 1 : page;
@@ -50,7 +58,7 @@ const SearchPage: NextPage<Props> = ({ query }) => {
   return (
     <Layout>
       {recipes && (
-        <div>
+        <div css={WrapperStyle}>
           <div css={RecipeListWrapperStyle}>
             {recipes.map((recipe) => {
               return <RecipeCard recipe={recipe} />;
@@ -60,7 +68,7 @@ const SearchPage: NextPage<Props> = ({ query }) => {
             <div>
               {hasPrev && (
                 <h2>
-                  <a href={`/?page=${page - 1}`}>前へ</a>
+                  <a href={prevPage}>前へ</a>
                 </h2>
               )}
             </div>
@@ -68,7 +76,7 @@ const SearchPage: NextPage<Props> = ({ query }) => {
             <div>
               {hasNext && (
                 <h2>
-                  <a href={`/?page=${nextPageNum}`}>次へ</a>
+                  <a href={nextPage}>次へ</a>
                 </h2>
               )}
             </div>
@@ -82,6 +90,10 @@ const SearchPage: NextPage<Props> = ({ query }) => {
 SearchPage.getInitialProps = ({ query }) => {
   return { query };
 };
+
+const WrapperStyle = css`
+  margin-top:8px;
+`;
 
 const PaginationWrapperStyle = css`
   display: flex;

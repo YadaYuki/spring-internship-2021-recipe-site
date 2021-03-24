@@ -18,7 +18,7 @@ const Header: React.FC<Props> = () => {
   },[])
   return (
     <div css={HeaderStyle}>
-      <TitleLogo />
+      <a href="/"><TitleLogo /></a>
       <Button onClick={handleOpen} type="text" shape="circle" icon={<SearchLogo />} />
       <SearchDrawer handleClose={handleClose} visible={drawerIsOpen} />
     </div>
@@ -30,9 +30,11 @@ const HeaderStyle = css`
   height: 48px;
   position: fixed;
   width: 100%;
-  > svg {
-    margin-top: 8px;
+  > a {
+    > svg{
+      margin-top: 8px;
     margin-left: 8px;
+    }
   }
   >button{
     position: fixed;
