@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import * as api from "../api/recipes";
 import { Recipe } from "../types";
 import { NextPage } from "next";
@@ -12,6 +12,8 @@ interface Props {
 
 const SearchPage: NextPage<Props> = ({ query }) => {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
+  const [hasNext, setHasNext] = useState<boolean>(false);
+  const [hasPrev, setHasPrev] = useState<boolean>(false);
   const { q, page } = query;
   const getLatestRecipes = async () => {
     const data = await api.getRecipes(page);
@@ -28,11 +30,17 @@ const SearchPage: NextPage<Props> = ({ query }) => {
     const getRecipes = isValidKeyWord() ? searchRecipes : getLatestRecipes;
     getRecipes()
       .then((data) => {
-        const { recipes } = data;
+        const { recipes, links } = data;
+        const { next, prev } = links;
+        setHasNext(!!next);
+        setHasPrev(!!prev);
         setRecipes(recipes);
       })
       .catch((err: any) => {});
   }, [q]);
+  const nextPageNum = useMemo(() => {
+    return page === undefined ? 2 : Number(page) + 1;
+  }, []);
   return (
     <Layout>
       {recipes && (
@@ -46,6 +54,8 @@ const SearchPage: NextPage<Props> = ({ query }) => {
               </div>
             );
           })}
+          {hasPrev && <a href={`/?page=${page - 1}`}>前へ</a>}
+          {hasNext && <a href={`/?page=${nextPageNum}`}>次へ</a>}
         </div>
       )}
     </Layout>
