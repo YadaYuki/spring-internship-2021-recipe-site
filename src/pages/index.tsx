@@ -7,6 +7,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import Layout from "../components/layout";
 import { SearchPageQuery } from "../types/query-type";
+import RecipeCard from "../components/search/recipe-card";
 
 interface Props {
   query: SearchPageQuery;
@@ -43,22 +44,18 @@ const SearchPage: NextPage<Props> = ({ query }) => {
   const nextPageNum = useMemo(() => {
     return page === undefined ? 2 : Number(page) + 1;
   }, []);
-  const renderPage = useMemo(()=>{
+  const renderPage = useMemo(() => {
     return page === undefined ? 1 : page;
-  },[])
+  }, []);
   return (
     <Layout>
       {recipes && (
         <div>
-          {recipes.map((recipe) => {
-            return (
-              <div key={recipe.id}>
-                <Link href={`recipes/${recipe.id}`}>
-                  <a>{recipe.title}</a>
-                </Link>
-              </div>
-            );
-          })}
+          <div css={RecipeListWrapperStyle}>
+            {recipes.map((recipe) => {
+              return <RecipeCard recipe={recipe} />;
+            })}
+          </div>
           <div css={PaginationWrapperStyle}>
             <div>
               {hasPrev && (
@@ -89,11 +86,17 @@ SearchPage.getInitialProps = ({ query }) => {
 const PaginationWrapperStyle = css`
   display: flex;
   justify-content: space-around;
-  border:1px solid #F2F2F2;
+  border: 1px solid #f2f2f2;
   align-items: center;
   h2 {
-    margin-top:0.5em;
+    margin-top: 0.5em;
   }
+`;
+
+const RecipeListWrapperStyle= css`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;z
 `;
 
 export default SearchPage;
