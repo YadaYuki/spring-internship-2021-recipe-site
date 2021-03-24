@@ -4,7 +4,7 @@ import { Recipe } from "../types";
 import { NextPage } from "next";
 import Link from "next/link";
 import Header from "../components/header";
-import {SearchPageQuery} from "./query-type"
+import {SearchPageQuery} from "../types/query-type"
 
 interface Props {
   query: SearchPageQuery;
