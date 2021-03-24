@@ -4,7 +4,6 @@ import React, { useEffect, useState, useMemo } from "react";
 import * as api from "../api/recipes";
 import { Recipe } from "../types";
 import { NextPage } from "next";
-import Link from "next/link";
 import Layout from "../components/layout";
 import { SearchPageQuery } from "../types/query-type";
 import RecipeCard from "../components/search/recipe-card";
@@ -50,7 +49,7 @@ const SearchPage: NextPage<Props> = ({ query }) => {
   return (
     <Layout>
       {recipes && (
-        <div>
+        <div css={WrapperStyle}>
           <div css={RecipeListWrapperStyle}>
             {recipes.map((recipe) => {
               return <RecipeCard recipe={recipe} />;
@@ -82,6 +81,10 @@ const SearchPage: NextPage<Props> = ({ query }) => {
 SearchPage.getInitialProps = ({ query }) => {
   return { query };
 };
+
+const WrapperStyle = css`
+  margin-top:8px;
+`;
 
 const PaginationWrapperStyle = css`
   display: flex;

@@ -17,7 +17,7 @@ const Layout: React.FC<Props> = ({ children }) => {
 };
 
 const ContentLayout = css`
-  padding-top: 56px;
+  padding-top: 48px;
 `;
 
 export default Layout;
