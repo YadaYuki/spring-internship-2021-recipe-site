@@ -31,4 +31,6 @@ const RecipePage: NextPage = () => {
   return <div>{recipe && <div>{JSON.stringify(recipe)}</div>}</div>;
 };
 
+
+
 export default RecipePage;

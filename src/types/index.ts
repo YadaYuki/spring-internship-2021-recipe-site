@@ -32,4 +32,8 @@ export type QueryParamRecipes = {
   id?: string;
 };
 
+export type QueryParamSearchRecipes = {
+  keyword: string;
+  page?: number;
+};
 

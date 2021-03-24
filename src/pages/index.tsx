@@ -3,40 +3,57 @@ import * as api from "../api/recipes";
 import { Recipe } from "../types";
 import { NextPage } from "next";
 import Link from "next/link";
-import Header from "../components/header";
+import Layout from "../components/layout";
+import { SearchPageQuery } from "../types/query-type";
 
-const SearchPage: NextPage = () => {
+interface Props {
+  query: SearchPageQuery;
+}
+
+const SearchPage: NextPage<Props> = ({ query }) => {
   const [recipes, setRecipes] = useState<Recipe[] | null>(null);
+  const { q, page } = query;
+  const getLatestRecipes = async () => {
+    const data = await api.getRecipes(page);
+    return data;
+  };
+  const searchRecipes = async () => {
+    const data = await api.searchRecipes(q, page);
+    return data;
+  };
+  const isValidKeyWord = () => {
+    return q !== undefined && q !== "";
+  };
   useEffect(() => {
-    const getRecipes = async () => {
-      const data = await api.getRecipes();
-      return data;
-    };
+    const getRecipes = isValidKeyWord() ? searchRecipes : getLatestRecipes;
     getRecipes()
       .then((data) => {
         const { recipes } = data;
         setRecipes(recipes);
       })
       .catch((err: any) => {});
-  });
+  }, [q]);
   return (
-    <div>
-      <Header />
+    <Layout>
       {recipes && (
         <div>
           {recipes.map((recipe) => {
             return (
-              <div>
-                <Link href={`recipes/${recipe.id}`} >
-                  <a >{recipe.title}</a>
+              <div key={recipe.id}>
+                <Link href={`recipes/${recipe.id}`}>
+                  <a>{recipe.title}</a>
                 </Link>
               </div>
             );
           })}
         </div>
       )}
-    </div>
+    </Layout>
   );
+};
+
+SearchPage.getInitialProps = ({ query }) => {
+  return { query };
 };
 
 export default SearchPage;
