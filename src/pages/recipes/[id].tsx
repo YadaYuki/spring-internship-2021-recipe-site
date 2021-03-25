@@ -48,28 +48,40 @@ const RecipePage: NextPage = () => {
                         >
                             {recipe.description}
                         </p>
-                        {/* TODO:add SNS Share Button */}
+                        {/* TODO:add OGP*/}
                         <div css={SnslogoListWrapperStyle}>
-                        <TwitterLogo />
-                        <LineLogo />
-                        <FacebookLogo />
+                            <TwitterLogo />
+                            <LineLogo />
+                            <FacebookLogo />
                         </div>
-                        <h3 css={SubTitleStyle}>材料</h3>
-                        {recipe.ingredients.map((ingredient) => {
-                            return (
-                                <p key={ingredient.name}>
-                                    {ingredient.name}:{ingredient.quantity}
-                                </p>
-                            )
-                        })}
-                        <h3 css={SubTitleStyle}>作り方</h3>
-                        {recipe.steps.map((step, idx) => {
-                            return (
-                                <p key={idx}>
-                                    {idx + 1}: {step}
-                                </p>
-                            )
-                        })}
+                        <div css={IngredientWrapperStyle}>
+                            <h3 css={SubTitleStyle}>材料</h3>
+                            <ul css={IngredientListStyle}>
+                                {recipe.ingredients.map((ingredient) => {
+                                    return (
+                                        <li
+                                            css={IngredientItemStyle}
+                                            key={ingredient.name}
+                                        >
+                                            <span>{ingredient.name}</span>
+                                            {ingredient.quantity}
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
+                        <div css={StepWrapperStyle}>
+                            <h3 css={SubTitleStyle}>作り方</h3>
+                            <ul css={StepListStyle}>
+                                {recipe.steps.map((step, idx) => {
+                                    return (
+                                        <li key={idx}>
+                                            {idx + 1}: {step}
+                                        </li>
+                                    )
+                                })}
+                            </ul>
+                        </div>
                         <div
                             css={css`
                                 margin-bottom: 24px;
@@ -93,13 +105,51 @@ const WrapperStyle = css`
 `
 
 const SnslogoListWrapperStyle = css`
-  display:flex;
-  margin-bottom:8px;
-  > svg{
-    width:40px;
-    height:40px;
-    margin-right:8px;
-  }
+    display: flex;
+    margin-bottom: 8px;
+    > svg {
+        width: 40px;
+        height: 40px;
+        margin-right: 8px;
+    }
+`
+
+const IngredientWrapperStyle = css`
+    margin-top: 24px;
+`
+
+const IngredientListStyle = css`
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+`
+
+const IngredientItemStyle = css`
+    padding: 15px 0;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #ddd;
+    > span{
+        margin-right:8px;
+    }
+`
+
+const StepWrapperStyle = css`
+    margin-top: 24px;
+`
+
+const StepListStyle = css`
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    > li {
+        padding: 15px 0;
+        font-weight: 500;
+        line-height: 1.25;
+        letter-spacing: 0.05em;
+        border-bottom: 1px solid #ddd;
+    }
 `
 
 const RecipeWrapperStyle = css`
@@ -108,7 +158,8 @@ const RecipeWrapperStyle = css`
 
 const SubTitleStyle = css`
     font-weight: 600;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #c4c4c4;
+    margin: 8px 0 0;
 `
 
 export default RecipePage
