@@ -2,6 +2,7 @@
 import { css } from '@emotion/react'
 import React from 'react'
 import Header from './header'
+import Head from 'next/head'
 
 interface Props {
     children: React.ReactNode
@@ -10,6 +11,9 @@ interface Props {
 const Layout: React.FC<Props> = ({ children }) => {
     return (
         <>
+            <Head>
+                <title>Cooking Papa</title>
+            </Head>
             <Header />
             <div css={ContentLayout}>{children}</div>
         </>

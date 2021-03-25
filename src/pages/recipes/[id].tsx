@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { NextPage, GetServerSideProps } from 'next'
-import { useRouter } from 'next/router'
 import type { Recipe } from '../../types'
 import * as api from '../../api/recipes'
 import Layout from '../../components/layout'
@@ -10,6 +9,7 @@ import TwitterLogo from '../../../public/twitter.svg'
 import LineLogo from '../../../public/line.svg'
 import FacebookLogo from '../../../public/facebook.svg'
 import ChefLogo from '../../../public/chef.svg'
+import OgpHeader from '../../components/recipes/ogp-header'
 
 interface Props {
     recipe: Recipe
@@ -18,6 +18,7 @@ interface Props {
 const RecipePage: NextPage<Props> = ({ recipe }) => {
     return (
         <Layout>
+            <OgpHeader recipe={recipe} />
             {recipe && (
                 <div css={WrapperStyle}>
                     {/* TODO:Fix To next/image */}
@@ -31,9 +32,11 @@ const RecipePage: NextPage<Props> = ({ recipe }) => {
                         >
                             {recipe.description}
                         </p>
-                        {/* TODO:add OGP*/}
                         <div css={SnslogoListWrapperStyle}>
-                            <TwitterLogo />
+                            <a href="https://twitter.com/intent/tweet" target="_blank" rel="noreferrer">
+                                <TwitterLogo />
+                            </a>
+
                             <LineLogo />
                             <FacebookLogo />
                         </div>
@@ -105,6 +108,11 @@ const SnslogoListWrapperStyle = css`
     display: flex;
     margin-bottom: 8px;
     > svg {
+        width: 40px;
+        height: 40px;
+        margin-right: 8px;
+    }
+    > a > svg {
         width: 40px;
         height: 40px;
         margin-right: 8px;

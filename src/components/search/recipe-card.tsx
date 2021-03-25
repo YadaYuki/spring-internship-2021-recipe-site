@@ -3,7 +3,7 @@ import { css } from '@emotion/react'
 import React from 'react'
 import { Recipe } from '../../types/'
 import Link from 'next/link'
-import moment from "moment-timezone"
+import moment from 'moment-timezone'
 
 interface Props {
     recipe: Recipe
@@ -32,7 +32,9 @@ const RecipeCard: React.FC<Props> = ({ recipe }) => {
                     </Link>
                 </h4>
                 <p css={IngredientStyle}>{renderMainIngredients(recipe)}</p>
-                <p css={PublishedAtStyle}>投稿日：{moment(recipe.published_at).format("YYYY/MM/DD")}</p>
+                <p css={PublishedAtStyle}>
+                    投稿日：{moment(recipe.published_at).format('YYYY/MM/DD')}
+                </p>
             </div>
         </div>
     )
@@ -71,9 +73,9 @@ const IngredientStyle = css`
 const PublishedAtStyle = css`
     height: 32px;
     font-size: 12px;
-    text-align:right;
-    color:#c4c4c4;
-    line-height:32px;
+    text-align: right;
+    color: #c4c4c4;
+    line-height: 32px;
 `
 
 export default RecipeCard

@@ -45,7 +45,6 @@ const SearchDrawer: React.FC<Props> = ({ handleClose, visible }) => {
                                 css={FoodListItemStyle(idx % 2 === 0)}
                                 key={idx}
                                 href={`/?q=${seasonalFood}`}
-
                             >
                                 {seasonalFood}
                             </a>
@@ -116,8 +115,8 @@ const FoodListItemStyle = (isEven: boolean) => {
         color: black;
         background: ${isEven ? '#fff' : '#F2F2F2'};
         border: 1px solid #f2f2f2;
-        height:48px;
-        line-height:48px;
+        height: 48px;
+        line-height: 48px;
     `
 }
 
