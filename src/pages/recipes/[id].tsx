@@ -9,6 +9,7 @@ import Layout from '../../components/layout'
 import TwitterLogo from '../../../public/twitter.svg'
 import LineLogo from '../../../public/line.svg'
 import FacebookLogo from '../../../public/facebook.svg'
+import ChefLogo from '../../../public/chef.svg'
 
 const RecipePage: NextPage = () => {
     const router = useRouter()
@@ -87,12 +88,12 @@ const RecipePage: NextPage = () => {
                                 })}
                             </ul>
                         </div>
-                        <div
-                            css={css`
-                                margin-bottom: 24px;
-                            `}
-                        >
-                            <h2>作者:{recipe.author.user_name}</h2>
+                        <div css={AuthorItemStyle}>
+                            <h3>このレシピの作者</h3>
+                            <div>
+                                <ChefLogo />
+                                <h3>{recipe.author.user_name}</h3>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,6 +105,7 @@ const RecipePage: NextPage = () => {
 const WrapperStyle = css`
   width;100%;
   max-width:560px;
+  padding-bottom:16px;
   > img{
     width:100%;
   }
@@ -160,15 +162,15 @@ const StepItemStyle = css`
 `
 
 const StepLabelStyle = css`
-    margin-right:8px;
-    > p{
-        background:#6A3C3C;
-        text-align:center;
-        color:#fff;
-        width:24px;
-        height:24px;
-        border-radius:50%;
-        line-height:24px;
+    margin-right: 8px;
+    > p {
+        background: #6a3c3c;
+        text-align: center;
+        color: #fff;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        line-height: 24px;
     }
 `
 
@@ -184,6 +186,27 @@ const SubTitleStyle = css`
     font-weight: 600;
     border-bottom: 1px solid #c4c4c4;
     margin: 8px 0 0;
+`
+
+const AuthorItemStyle = css`
+    margin:24px;
+    background:#FAFAF5;
+    border:1px solid #DDDBD6;
+    padding:8px;
+    border-radius:8px;
+    > h3{
+        font-weight:600;
+    }
+    > div{
+        display:flex;
+        > svg{
+            width:20%;
+        }
+        > h3{
+            width:80%;
+            text-align:center;
+        }
+    }
 `
 
 export default RecipePage
