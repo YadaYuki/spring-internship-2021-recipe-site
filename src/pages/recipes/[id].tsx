@@ -1,8 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
-import React, { useState, useEffect } from 'react'
-import { NextPage } from 'next'
-import { useRouter } from 'next/router'
+import React from 'react'
+import { NextPage, GetServerSideProps } from 'next'
 import type { Recipe } from '../../types'
 import * as api from '../../api/recipes'
 import Layout from '../../components/layout'
@@ -10,32 +9,18 @@ import TwitterLogo from '../../../public/twitter.svg'
 import LineLogo from '../../../public/line.svg'
 import FacebookLogo from '../../../public/facebook.svg'
 import ChefLogo from '../../../public/chef.svg'
+import OgpHeader from '../../components/recipes/ogp-header'
 
-const RecipePage: NextPage = () => {
-    const router = useRouter()
-    const { id: idStr } = router.query
-    const [recipe, setRecipe] = useState<Recipe | null>(null)
-    useEffect(() => {
-        const getRecipe = async () => {
-            const data = await api.getRecipe(id)
-            return data
-        }
+interface Props {
+    recipe: Recipe
+    hostUrl: string
+}
 
-        const id = Number(idStr)
-        if (isNaN(id)) {
-            // TODO:add message
-            return
-        }
-        getRecipe()
-            .then((recipe) => {
-                setRecipe(recipe)
-            })
-            .catch((err: any) => {
-                console.error(err)
-            })
-    }, [idStr])
+const RecipePage: NextPage<Props> = ({ recipe, hostUrl }) => {
+    const url = `${hostUrl}/recipes/${recipe.id}`
     return (
         <Layout>
+            <OgpHeader recipe={recipe} />
             {recipe && (
                 <div css={WrapperStyle}>
                     {/* TODO:Fix To next/image */}
@@ -49,11 +34,28 @@ const RecipePage: NextPage = () => {
                         >
                             {recipe.description}
                         </p>
-                        {/* TODO:add OGP*/}
                         <div css={SnslogoListWrapperStyle}>
-                            <TwitterLogo />
-                            <LineLogo />
-                            <FacebookLogo />
+                            <a
+                                href={`https://twitter.com/intent/tweet?url=${url}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <TwitterLogo />
+                            </a>
+                            <a
+                                href={`http://www.facebook.com/sharer.php?u=${url}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <FacebookLogo />
+                            </a>
+                            <a
+                                href={`https://social-plugins.line.me/lineit/share?url=${url}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <LineLogo />
+                            </a>
                         </div>
                         <div css={IngredientWrapperStyle}>
                             <h3 css={SubTitleStyle}>材料</h3>
@@ -102,6 +104,15 @@ const RecipePage: NextPage = () => {
     )
 }
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const id = Number(context.params.id)
+    if (isNaN(id)) {
+        return
+    }
+    const hostUrl = context.req.headers.host
+    const data = await api.getRecipe(id)
+    return { props: { recipe: data, hostUrl } }
+}
 const WrapperStyle = css`
   width;100%;
   max-width:560px;
@@ -115,6 +126,11 @@ const SnslogoListWrapperStyle = css`
     display: flex;
     margin-bottom: 8px;
     > svg {
+        width: 40px;
+        height: 40px;
+        margin-right: 8px;
+    }
+    > a > svg {
         width: 40px;
         height: 40px;
         margin-right: 8px;
@@ -189,22 +205,22 @@ const SubTitleStyle = css`
 `
 
 const AuthorItemStyle = css`
-    margin:24px;
-    background:#FAFAF5;
-    border:1px solid #DDDBD6;
-    padding:8px;
-    border-radius:8px;
-    > h3{
-        font-weight:600;
+    margin: 24px;
+    background: #fafaf5;
+    border: 1px solid #dddbd6;
+    padding: 8px;
+    border-radius: 8px;
+    > h3 {
+        font-weight: 600;
     }
-    > div{
-        display:flex;
-        > svg{
-            width:20%;
+    > div {
+        display: flex;
+        > svg {
+            width: 20%;
         }
-        > h3{
-            width:80%;
-            text-align:center;
+        > h3 {
+            width: 80%;
+            text-align: center;
         }
     }
 `
