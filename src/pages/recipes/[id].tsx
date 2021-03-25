@@ -42,9 +42,20 @@ const RecipePage: NextPage<Props> = ({ recipe, hostUrl }) => {
                             >
                                 <TwitterLogo />
                             </a>
-
-                            <LineLogo />
-                            <FacebookLogo />
+                            <a
+                                href={`http://www.facebook.com/sharer.php?u=${url}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <FacebookLogo />
+                            </a>
+                            <a
+                                href={`https://social-plugins.line.me/lineit/share?url=${url}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
+                                <LineLogo />
+                            </a>
                         </div>
                         <div css={IngredientWrapperStyle}>
                             <h3 css={SubTitleStyle}>材料</h3>
