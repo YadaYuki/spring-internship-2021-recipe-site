@@ -75,8 +75,13 @@ const RecipePage: NextPage = () => {
                             <ul css={StepListStyle}>
                                 {recipe.steps.map((step, idx) => {
                                     return (
-                                        <li key={idx}>
-                                            {idx + 1}: {step}
+                                        <li css={StepItemStyle} key={idx}>
+                                            <div css={StepLabelStyle}>
+                                                <p> {idx + 1} </p>
+                                            </div>
+                                            <div css={StepDescriptionStyle}>
+                                                {step}
+                                            </div>
                                         </li>
                                     )
                                 })}
@@ -130,8 +135,8 @@ const IngredientItemStyle = css`
     line-height: 1.25;
     letter-spacing: 0.05em;
     border-bottom: 1px solid #ddd;
-    > span{
-        margin-right:8px;
+    > span {
+        margin-right: 8px;
     }
 `
 
@@ -143,13 +148,32 @@ const StepListStyle = css`
     list-style: none;
     margin: 0 !important;
     padding: 0 !important;
-    > li {
-        padding: 15px 0;
-        font-weight: 500;
-        line-height: 1.25;
-        letter-spacing: 0.05em;
-        border-bottom: 1px solid #ddd;
+`
+
+const StepItemStyle = css`
+    padding: 15px 0;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+`
+
+const StepLabelStyle = css`
+    margin-right:8px;
+    > p{
+        background:#6A3C3C;
+        text-align:center;
+        color:#fff;
+        width:24px;
+        height:24px;
+        border-radius:50%;
+        line-height:24px;
     }
+`
+
+const StepDescriptionStyle = css`
+    width: 90%;
 `
 
 const RecipeWrapperStyle = css`
