@@ -13,9 +13,11 @@ import OgpHeader from '../../components/recipes/ogp-header'
 
 interface Props {
     recipe: Recipe
+    hostUrl: string
 }
 
-const RecipePage: NextPage<Props> = ({ recipe }) => {
+const RecipePage: NextPage<Props> = ({ recipe, hostUrl }) => {
+    const url = `${hostUrl}/recipes/${recipe.id}`
     return (
         <Layout>
             <OgpHeader recipe={recipe} />
@@ -33,7 +35,11 @@ const RecipePage: NextPage<Props> = ({ recipe }) => {
                             {recipe.description}
                         </p>
                         <div css={SnslogoListWrapperStyle}>
-                            <a href="https://twitter.com/intent/tweet" target="_blank" rel="noreferrer">
+                            <a
+                                href={`https://twitter.com/intent/tweet?url=${url}`}
+                                target="_blank"
+                                rel="noreferrer"
+                            >
                                 <TwitterLogo />
                             </a>
 
@@ -92,8 +98,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (isNaN(id)) {
         return
     }
+    const hostUrl = context.req.headers.host
     const data = await api.getRecipe(id)
-    return { props: { recipe: data } }
+    return { props: { recipe: data, hostUrl } }
 }
 const WrapperStyle = css`
   width;100%;
