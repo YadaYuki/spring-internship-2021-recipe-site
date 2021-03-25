@@ -16,9 +16,8 @@ export const SeasonalFoodList = [
     '長ねぎ',
     '新玉ねぎ',
     'イチゴ',
-    'グレープフルーツ',
     '鯛',
-]
+] // 6文字以下推奨
 export const PopularDishList = [
     'ご飯',
     'パスタ',
