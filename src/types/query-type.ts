@@ -1,4 +1,4 @@
 export interface SearchPageQuery {
-  q?:string,
-  page?:number
+    q?: string
+    page?: number
 }
