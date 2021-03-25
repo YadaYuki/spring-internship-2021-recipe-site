@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react'
 import React, { useState, useEffect } from 'react'
-import { NextPage } from 'next'
+import { NextPage, GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import type { Recipe } from '../../types'
 import * as api from '../../api/recipes'
@@ -11,29 +11,11 @@ import LineLogo from '../../../public/line.svg'
 import FacebookLogo from '../../../public/facebook.svg'
 import ChefLogo from '../../../public/chef.svg'
 
-const RecipePage: NextPage = () => {
-    const router = useRouter()
-    const { id: idStr } = router.query
-    const [recipe, setRecipe] = useState<Recipe | null>(null)
-    useEffect(() => {
-        const getRecipe = async () => {
-            const data = await api.getRecipe(id)
-            return data
-        }
+interface Props {
+    recipe: Recipe
+}
 
-        const id = Number(idStr)
-        if (isNaN(id)) {
-            // TODO:add message
-            return
-        }
-        getRecipe()
-            .then((recipe) => {
-                setRecipe(recipe)
-            })
-            .catch((err: any) => {
-                console.error(err)
-            })
-    }, [idStr])
+const RecipePage: NextPage<Props> = ({ recipe }) => {
     return (
         <Layout>
             {recipe && (
@@ -102,6 +84,14 @@ const RecipePage: NextPage = () => {
     )
 }
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const id = Number(context.params.id)
+    if (isNaN(id)) {
+        return
+    }
+    const data = await api.getRecipe(id)
+    return { props: { recipe: data } }
+}
 const WrapperStyle = css`
   width;100%;
   max-width:560px;
@@ -189,22 +179,22 @@ const SubTitleStyle = css`
 `
 
 const AuthorItemStyle = css`
-    margin:24px;
-    background:#FAFAF5;
-    border:1px solid #DDDBD6;
-    padding:8px;
-    border-radius:8px;
-    > h3{
-        font-weight:600;
+    margin: 24px;
+    background: #fafaf5;
+    border: 1px solid #dddbd6;
+    padding: 8px;
+    border-radius: 8px;
+    > h3 {
+        font-weight: 600;
     }
-    > div{
-        display:flex;
-        > svg{
-            width:20%;
+    > div {
+        display: flex;
+        > svg {
+            width: 20%;
         }
-        > h3{
-            width:80%;
-            text-align:center;
+        > h3 {
+            width: 80%;
+            text-align: center;
         }
     }
 `
