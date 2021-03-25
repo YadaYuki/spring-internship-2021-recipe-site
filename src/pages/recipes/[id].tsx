@@ -6,6 +6,9 @@ import { useRouter } from 'next/router'
 import type { Recipe } from '../../types'
 import * as api from '../../api/recipes'
 import Layout from '../../components/layout'
+import TwitterLogo from '../../../public/twitter.svg'
+import LineLogo from '../../../public/line.svg'
+import FacebookLogo from '../../../public/facebook.svg'
 
 const RecipePage: NextPage = () => {
     const router = useRouter()
@@ -29,7 +32,7 @@ const RecipePage: NextPage = () => {
             .catch((err: any) => {
                 console.error(err)
             })
-    }, [])
+    }, [idStr])
     return (
         <Layout>
             {recipe && (
@@ -46,6 +49,11 @@ const RecipePage: NextPage = () => {
                             {recipe.description}
                         </p>
                         {/* TODO:add SNS Share Button */}
+                        <div css={SnslogoListWrapperStyle}>
+                        <TwitterLogo />
+                        <LineLogo />
+                        <FacebookLogo />
+                        </div>
                         <h3 css={SubTitleStyle}>材料</h3>
                         {recipe.ingredients.map((ingredient) => {
                             return (
@@ -81,6 +89,16 @@ const WrapperStyle = css`
   max-width:560px;
   > img{
     width:100%;
+  }
+`
+
+const SnslogoListWrapperStyle = css`
+  display:flex;
+  margin-bottom:8px;
+  > svg{
+    width:40px;
+    height:40px;
+    margin-right:8px;
   }
 `
 
