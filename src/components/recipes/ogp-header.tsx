@@ -20,6 +20,7 @@ const OgpHeader: React.FC<Props> = ({ recipe }) => {
             <meta property="og:description" content={recipe.description} />
             <meta property="og:image" content={recipe.image_url} />
             <meta property="og:locale" content="ja_JP" />
+            <meta name="twitter:card" content="summary"></meta>
         </Head>
     )
 }
