@@ -130,7 +130,7 @@ const PaginationWrapperStyle = css`
 const RecipeListWrapperStyle = css`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
 `
 
 export default SearchPage
