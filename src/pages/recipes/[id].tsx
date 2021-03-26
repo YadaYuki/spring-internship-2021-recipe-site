@@ -24,7 +24,9 @@ const RecipePage: NextPage<Props> = ({ recipe, hostUrl }) => {
             {recipe && (
                 <div css={WrapperStyle}>
                     {/* TODO:Fix To next/image */}
-                    <img src={recipe.image_url} />
+                    <img
+                    src={!recipe.image_url ? '/empty.png' : recipe.image_url}
+                />
                     <div css={RecipeWrapperStyle}>
                         <h2>{recipe.title}</h2>
                         <p
@@ -221,6 +223,7 @@ const AuthorItemStyle = css`
         > h3 {
             width: 80%;
             text-align: center;
+            margin:0;
         }
     }
 `

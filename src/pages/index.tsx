@@ -25,11 +25,11 @@ const SearchPage: NextPage<Props> = ({ query }) => {
         const data = await api.searchRecipes(q, page)
         return data
     }, [page, q])
-    const isValidKeyWord = useCallback(() => {
+    const isValidKeyWord = useMemo(() => {
         return q !== undefined && q !== ''
     }, [q])
     useEffect(() => {
-        const getRecipes = isValidKeyWord() ? searchRecipes : getLatestRecipes
+        const getRecipes = isValidKeyWord ? searchRecipes : getLatestRecipes
         getRecipes()
             .then((data) => {
                 const { recipes, links } = data
@@ -59,6 +59,11 @@ const SearchPage: NextPage<Props> = ({ query }) => {
     }, [page])
     return (
         <Layout>
+            {isValidKeyWord && (
+                <div css={SearchResultMsgStyle}>
+                    <h2>「{q}」<span>でレシピ検索しました</span></h2>
+                </div>
+            )}
             {recipes && (
                 <div css={WrapperStyle}>
                     <div css={RecipeListWrapperStyle}>
@@ -71,17 +76,17 @@ const SearchPage: NextPage<Props> = ({ query }) => {
                     <div css={PaginationWrapperStyle}>
                         <div>
                             {hasPrev && (
-                                <h2>
+                                <h3>
                                     <a href={prevPage}>前へ</a>
-                                </h2>
+                                </h3>
                             )}
                         </div>
-                        <h2>{renderPage}ページ目</h2>
+                        <h3>{renderPage}ページ目</h3>
                         <div>
                             {hasNext && (
-                                <h2>
+                                <h3>
                                     <a href={nextPage}>次へ</a>
-                                </h2>
+                                </h3>
                             )}
                         </div>
                     </div>
@@ -95,6 +100,19 @@ SearchPage.getInitialProps = ({ query }) => {
     return { query }
 }
 
+
+const SearchResultMsgStyle = css`
+    margin: 8px 4px;
+    > h2 {
+        font-weight:600;
+        text-align:center;
+        > span {
+            font-weight:400;
+            font-size:12px;
+        }
+    }
+`
+
 const WrapperStyle = css`
     margin-top: 8px;
 `
@@ -104,15 +122,15 @@ const PaginationWrapperStyle = css`
     justify-content: space-around;
     border: 1px solid #f2f2f2;
     align-items: center;
-    h2 {
+    h3 {
         margin-top: 0.5em;
     }
 `
 
 const RecipeListWrapperStyle = css`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;z
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 `
 
 export default SearchPage

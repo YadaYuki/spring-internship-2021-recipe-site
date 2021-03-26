@@ -24,7 +24,11 @@ const renderMainIngredients = (recipe: Recipe) => {
 const RecipeCard: React.FC<Props> = ({ recipe }) => {
     return (
         <div css={CardStyle}>
-            <img src={recipe.image_url} />
+            <div css={ImageWrapperStyle}>
+                <img
+                    src={!recipe.image_url ? '/empty.png' : recipe.image_url}
+                />
+            </div>
             <div css={RecipeInfoWrapperStyle}>
                 <h4 css={TitleStyle}>
                     <Link href={`recipes/${recipe.id}`}>
@@ -41,23 +45,24 @@ const RecipeCard: React.FC<Props> = ({ recipe }) => {
 }
 
 const CardStyle = css`
-    width: 144px;
+    width: 152px;
     border: 1px solid #f2f2f2;
-    margin: 8px;
+    margin: 4px;
     border-radius: 4px;
     height: 240px;
-    > div {
-        margin: 4px;
-    }
-    > img {
+`
+
+const ImageWrapperStyle = css`
+    img {
         width: 100%;
         border-radius: 4px 0px;
-        min-height: 80px;
+        height: 80px;
     }
 `
 
 const RecipeInfoWrapperStyle = css`
     padding: 4px;
+    margin: 4px;
 `
 
 const TitleStyle = css`
