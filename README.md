@@ -1,44 +1,25 @@
-# spring-internship-2021-recipe-site
+# Recipe Page By Next.js/Typescript
 
-Cookpad Online Spring Internship 2021 のリポジトリです。インターンシップ参加者はこのリポジトリを fork してアプリケーションを実装してください。
+- Recipe Page By Next.js/Typescript
+- Implemented on Cookpad Online Spring Internship 2021
+- About the event: [Cookpad Online Spring Internship 2021 と Hackarade を合同開催しました
+](https://techlife.cookpad.com/entry/internship-2021-spring)
 
-## Getting Started
+# Demo 🤩
 
-Next.js と TypeScript で開発環境をつくるところまでをこのドキュメントに記述します。Node.js は予めインストールされている前提です。yarn が使いたい人は npm を yarn に置き換えて読んでください。
+<div align="center">
+<img src="https://user-images.githubusercontent.com/57289763/137630775-424a2d94-8dbf-455d-8688-b3378802db98.gif" alt="レシピページのDemo Gif" />
+</div>
 
-まずは必用なモジュールをインストールします。
+## Setup
 
-```
-$ npm install --save next react react-dom
-$ npm install --save-dev typescript @types/react @types/node
-```
-
-次に `pages/index.tsx` というファイルを作って以下のように編集してください。
-
-```typescript
-import { FC } from "react";
-
-const TopPage: FC = () => {
-  return <h1>Hello Next!</h1>;
-};
-
-export default TopPage;
-```
-
-最後に開発サーバーを起動します。
+- Install dependencies
 
 ```
-$ npx next dev
+$ yarn install
 ```
+- Start Locally
 
-http://localhost:3000/ を開いて `Hello Next!` が表示されていることを確認します。
-
-簡単でしたね。
-
-# URL 
-
-本アプリケーションは,masterブランチにマージされた際、Vercelを利用してホスティングされた環境にデプロイされる。
-URL:
-https://spring-internship-2021-recipe-site-umber.vercel.app/
-
-
+```
+$ yarn start
+```
