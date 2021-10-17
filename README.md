@@ -1,4 +1,4 @@
-# Recipe Page By Next.js/Typescript
+# Recipe Site by Next.js/Typescript 🍛🍣🍦
 
 - Recipe Page By Next.js/Typescript
 - Implemented on Cookpad Online Spring Internship 2021
